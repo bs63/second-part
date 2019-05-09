@@ -1,0 +1,42 @@
+Feature: Edit Client
+  In order to keep updated my previous registers about clients
+  As a user
+  I want to edit a client details register I created
+
+  Background: There are registered users and a client access by one of them
+    Given Exists a user "user1" with password "password"
+    And Exists a user "user2" with password "password"
+    And Exists client registered by "user1"
+      | nif             | Fname            | address                |
+      | X9334549E       | Bikraj           | Carrer Manuel Galadies |
+
+  Scenario: Edit owned client registry address
+    Given I login as user "user1" with password "password"
+    When I edit the client with Fname "Bikraj"
+      | address        |
+      | Carrer de carme  |
+    Then I'm viewing the details page for restaurant by "user1"
+    | nif             | Fname            | address                |
+    | X9334549E       | Bikraj           | Carrer de Carme        |
+    And There are 1 clients
+
+  Scenario: Try to edit client but not logged in
+    Given I'm not logged in
+    When I view the details for clients "Bikraj"
+    Then There is no "edit" link available
+
+  Scenario: Try to edit client but not the owner no edit button
+    Given I login as user "user2" with password "password"
+    When I view the details for client "Bikraj"
+    Then There is no "edit" link available
+
+  Scenario: Force edit client but not the owner permission exception
+    Given I login as user "user2" with password "password"
+    When I edit the client with Fname "Bikraj"
+      | address         |
+      | Carrer de carme |
+    Then Server responds with page containing "403 Forbidden"
+    When I view the details for client "Bikraj"
+    Then I'm viewing the details page for restaurant by "user1"
+      | nif             | Fname            | address                |
+      | X9334549E       | Bikraj           | Carrer Manuel Galadies |

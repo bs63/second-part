@@ -1,0 +1,16 @@
+
+
+{% block content %}
+
+<center>
+<h1>Welcome to my Dream Restaurant Log Form</h1>
+  <form method="post">
+    {% csrf_token %}
+    <h1>{{ form.as_p }}</h1>
+    {% if request.GET.next %}
+      <input type="hidden" name="next" value="{{request.GET.next}}"
+    {% endif %}
+    <button type="submit"><h3>Login</h3></button>
+  </form>
+</center>
+{% endblock %}

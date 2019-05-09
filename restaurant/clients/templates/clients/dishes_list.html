@@ -1,0 +1,66 @@
+<center><h1>Dishes</h1></center>
+
+<table border="1">
+<thead>
+  <style>
+
+  body {
+    background-color: #e4bc52;
+  }
+
+  table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  }
+
+  td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  }
+  table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  }
+  th, td {
+  padding: 15px;
+  }
+
+  </style>
+
+    <tr>
+    <th class="bg-info"><i>meal_id</i></th>
+    <th class="bg-info"><i>name</i></th>
+    <th class="bg-info"><i>date_of_meal</i></th>
+    <th class="bg-info"><i>price</i></th>
+    <th class="bg-info"><i>description</i></th>
+    <th class="bg-info"><i>rating</i></th>
+    <th class="bg-info"><i>images</i></th>
+    <th class="bg-info"><i>similardishes</i></th>
+    <th class="bg-danger"><i>View</i></th>
+    <th class="bg-danger"><i>Edit</i></th>
+    <th class="bg-danger"><i>Delete</i></th>
+    </tr>
+</thead>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<tbody>
+    {% for dishes in object_list %}
+    <tr>
+    <td class="bg-success"><b>{{ dishes.meal_id }}</b></td>
+    <td class="table-success"><b>{{ dishes.name }}</b></td>
+    <td class="bg-success"><b>{{ dishes.date_of_meal }}</b></td>
+    <td class="table-success"><b>{{ dishes.price }}</b></td>
+    <td class="bg-success"><b>{{ dishes.description }}</b></td>
+    <td class="table-success"><b>{{ dishes.rating }}</b></td>
+    <td class="table-success"><b>{{ dishes.images }}</b></td>
+    <td class="table-success"><b>{{ dishes.similardishes }}</b></td>
+    <td class="table-warning"><b><i><a href="{% url "dishes_view" dishes.id %}">view</a></i></b></td>
+    <td class="table-success"><b><i><a href="{% url "dishes_edit" dishes.id %}">edit</a></i></b></td>
+    <td class="table-warning"><b><i><a href="{% url "dishes_delete" dishes.id %}">delete</a></i></b></td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+<a href="{% url "dishes_new" %}"><h3>New Dish</h3></a>

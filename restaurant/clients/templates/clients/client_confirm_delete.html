@@ -1,0 +1,20 @@
+<thead>
+  <div class="navbar">
+    <a class="active" href="{% url "client_list" %}"><h2>Home</h2></a>
+    <a href="{% url "login" %}"><h2>Logout<h2></a>
+  </div>
+</thead>
+
+<style>
+
+  body {
+    background-color: #fab394;
+  }
+</style>
+
+
+<h1>client Delete</h1>
+<form method="post">{% csrf_token %}
+    Are you sure you want to delete "{{ object }}" ?
+    <input type="submit" value="Submit" />
+</form>

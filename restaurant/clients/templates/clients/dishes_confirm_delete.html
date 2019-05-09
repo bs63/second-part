@@ -1,0 +1,12 @@
+<h1>Dish Delete</h1>
+
+<style>
+  body {
+    background-color: #f48000;
+  }
+</style>
+
+<form method="post">{% csrf_token %}
+    <h2>Are you sure you want to delete "{{ object }}" ?</h2>
+    <input type="submit" value="Submit" />
+</form>

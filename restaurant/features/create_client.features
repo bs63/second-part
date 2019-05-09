@@ -1,0 +1,37 @@
+Feature: Register Client
+  In order to keep track of the Client that visit a restaurant as a Client
+  As a user
+  I want to register a client together with his contact details
+
+  Background: There is a registered user
+    Given Exists a user "user" with password "password"
+
+  Scenario: Register all the information of the client
+    Given I login as user "user" with password "password"
+    When I register client information
+    | Nif        | Fname      | Lname   |  Address         |  Phone Number  |
+    | X9334549E  | Bikraj     | Singh   |  Manuel Galadies |  632215778     |
+    Then I'm viewing the details page for client by "user"
+    | Nif        | Fname      | Lname   |  Address         |  Phone Number  |
+    | X9334549E  | Bikraj     | Singh   |  Manuel Galadies |  632215778     |
+    And There are 1 client
+
+  Scenario: Register all the information of the client but logout
+    Given I login as user "user" with password "password"
+    When I register client suddenly logout
+    | Nif        | Fname      | Lname   |  Address         |  Phone Number  |
+    | X9334549E  | Bikraj     | Singh   |  Manuel Galadies |  632215778     |
+    Then I'm viewing the details page for restaurant by "user"
+    | Nif        | Fname      | Lname   |  Address         |  Phone Number  |
+    |            |            |         |                  |                |
+    And There are 0 client
+
+    Scenario: Register all the information of the client with login
+      Given I login as user "user" with password "password"
+      When I register client suddenly click home
+      | Nif        | Fname      | Lname   |  Address         |  Phone Number  |
+      | X9334549E  | Bikraj     | Singh   |  Manuel Galadies |  632215778     |
+      Then I'm viewing the details page for restaurant by "user"
+      | Nif        | Fname      | Lname   |  Address         |   Phone Number  |
+      |            |            |         |                  |                 |
+      And There are 0 client

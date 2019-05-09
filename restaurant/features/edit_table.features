@@ -1,0 +1,42 @@
+Feature: Edit Table
+  In order to keep updated my previous registers about tables
+  As a user
+  I want to edit a table details register I created
+
+  Background: There are registered users and a worker access by one of them
+    Given Exists a user "user1" with password "password"
+    And Exists a user "user2" with password "password"
+    And Exists table registered by "user1"
+      | table_number      | capacity            | status      |
+      | 9                 | 8                   | occupied    |
+
+  Scenario: Edit owned worker registry address
+    Given I login as user "user1" with password "password"
+    When I edit the table with table_number "9"
+      | status        |
+      | free          |
+    Then I'm viewing the details page for restaurant by "user1"
+    | table_number      | capacity            | status      |
+    | 9                 | 8                   | free        |
+    And There are 1 tables
+
+  Scenario: Try to edit table but not logged in
+    Given I'm not logged in
+    When I view the details for table 9
+    Then There is no "edit" link available
+
+  Scenario: Try to edit table but not the owner no edit button
+    Given I login as user "user2" with password "password"
+    When I view the details for table 9
+    Then There is no "edit" link available
+
+  Scenario: Force edit table but not the owner permission exception
+    Given I login as user "user2" with password "password"
+    When I edit the table with table_number 9
+      | status         |
+      | free           |
+    Then Server responds with page containing "403 Forbidden"
+    When I view the details for table 9
+    Then I'm viewing the details page for restaurant by "user1"
+    | table_number      | capacity            | status      |
+    | 9                 | 8                   | occupied    |

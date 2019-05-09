@@ -1,0 +1,35 @@
+Feature: View Dishes
+  In order to know about a dishes
+  As a user
+  I want to view the registered dishes details
+
+  Background: There is one restaurant with 2 dishess "password"
+    And Exists a user "user2" with password "password"
+    And Exists dishes at restaurant by "user1"
+      | meal_id     | name      | date_of_meal   | price          | description  | rating  |  images  | similardishes |
+      | 4           | palao     | 24/11/2019     |  14            |              |  3      |          | yes           |
+    And Exists dishes at restaurant by "user2"
+      | meal_id     | name      | date_of_meal   | price          | description  | rating  |  images  | similardishes |
+      | 5           | palao     | 24/11/2019     |  14            |              |  3      |          | yes           |
+
+    Scenario: View details about owned dishes
+    Given I login as user "user1" with password "password"
+    When I view the details for dishes 4
+    Then I'm viewingdishes details including
+      | meal_id     | name      | date_of_meal   | price          | description  | rating  |  images  | similardishes |
+      | 4           | palao     | 24/11/2019     |  14            |              |  3      |          | yes           |
+    And There is "edit" link available
+
+  Scenario: View details about dishes but not logged in
+    Given I'm not logged in
+    When I view the details for dishes 4
+    Then I'm viewing dishes details including
+      | meal_id     | name      | date_of_meal   | price          | description  | rating  |  images  | similardishes |
+      | 4           | palao     | 24/11/2019     |  14            |              |  3      |          | yes           |
+  Scenario: View details about other user dishes
+    Given I login as user "user1" with password "password"
+    When I view the details for dishes 5
+    Then I'm viewing dishes details including
+      | meal_id     | name      | date_of_meal   | price          | description  | rating  |  images  | similardishes |
+      | 5           | palao     | 24/11/2019     |  14            |              |  3      |          | yes           |
+  And There is no "edit" link available

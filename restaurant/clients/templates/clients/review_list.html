@@ -1,0 +1,58 @@
+<center><h1>Review</h1></center>
+
+<table border="1">
+<thead>
+  <style>
+
+  body {
+    background-color: #e4bc52;
+  }
+
+  table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  }
+
+  td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  }
+  table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  }
+  th, td {
+  padding: 15px;
+  }
+
+  </style>
+
+    <tr>
+    <th class="bg-info"><i>rating</i></th>
+    <th class="bg-info"><i>comment</i></th>
+    <th class="bg-info"><i>date</i></th>
+    <th class="bg-info"><i>client</i></th>
+    <th class="bg-danger"><i>View</i></th>
+    <th class="bg-danger"><i>Edit</i></th>
+    <th class="bg-danger"><i>Delete</i></th>
+    </tr>
+</thead>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<tbody>
+    {% for review in object_list %}
+    <tr>
+    <td class="bg-success"><b>{{ review.rating }}</b></td>
+    <td class="table-success"><b>{{ review.comment }}</b></td>
+    <td class="bg-success"><b>{{ review.date }}</b></td>
+    <td class="table-success"><b>{{ review.client }}</b></td>
+    <td class="table-warning"><b><i><a href="{% url "review_view" review.id %}">view</a></i></b></td>
+    <td class="table-success"><b><i><a href="{% url "review_edit" review.id %}">edit</a></i></b></td>
+    <td class="table-warning"><b><i><a href="{% url "review_delete" review.id %}">delete</a></i></b></td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+<a href="{% url "review_new" %}"><h3>New Review</h3></a>

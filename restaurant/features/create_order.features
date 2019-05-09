@@ -1,0 +1,38 @@
+Feature: Register Order
+  In order to keep track of the order that the client visit a restaurant
+  As a user
+  I want to register a order details
+
+  Background: There is a registered user
+    Given Exists a user "user" with password "password"
+
+  Scenario: Register all the information of the order
+    Given I login as user "user" with password "password"
+    When I register order information
+    | orderid       | order_date      | client   |   quantity         |   pick_up_date  |
+    | 4             | 7/10/2019       |          |   4                |   6/11/2019     |
+    Then I'm viewing the details page for client by "user"
+    | orderid       | order_date      | client   |   quantity         |   pick_up_date  |
+    | 4             | 7/10/2019       |          |   4                |   6/11/2019     |
+    And There are 1 order
+
+  Scenario: Register all the information of the order but logout
+    Given I login as user "user" with password "password"
+    When I register order suddenly logout
+    | orderid       | order_date      | client   |   quantity         |   pick_up_date  |
+    | 4             | 7/10/2019       |          |   4                |   6/11/2019     |
+    Then I'm viewing the details page for restaurant by "user"
+    | orderid       | order_date      | client   |   quantity         |   pick_up_date  |
+    |               |                 |          |                    |                 |
+
+    And There are 0 order
+
+  Scenario: Register all the information of the order with login
+    Given I login as user "user" with password "password"
+    When I register client suddenly click home
+    | orderid       | order_date      | client   |   quantity         |   pick_up_date  |
+    | 4             | 7/10/2019       |          |   4                |   6/11/2019     |
+    Then I'm viewing the details page for order by "user"
+    | orderid       | order_date      | client   |   quantity         |   pick_up_date  |
+    |               |                 |          |                    |                 |
+    And There are 0 order

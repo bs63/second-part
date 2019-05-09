@@ -1,0 +1,38 @@
+Feature: Register Waiter
+  In order to keep track of the Waiter that works a restaurant
+  As a user
+  I want to register a waiter together with his details
+
+  Background: There is a registered user
+    Given Exists a user "user" with password "password"
+
+  Scenario: Register all the information of the waiter
+    Given I login as user "user" with password "password"
+    When I register waiter information
+    | waiterid            | lastname          | firstname   | Username                  | phone_number_wait   | password  | order |
+    | 4                   | singh             | bikraj      | bs6                       | 632215778           | bikrdj    |       |
+    Then I'm viewing the details page for client by "user"
+    | waiterid            | lastname          | firstname   | Username                  | phone_number_wait   | password  | order |
+    | 4                   | singh             | bikraj      | bs6                       | 632215778           | bikrdj    |       |
+    And There are 1 waiter
+
+  Scenario: Register all the information of the table but logout
+    Given I login as user "user" with password "password"
+    When I register waiter suddenly logout
+    | waiterid            | lastname          | firstname   | Username                  | phone_number_wait   | password  | order |
+    | 4                   | singh             | bikraj      | bs6                       | 632215778           | bikrdj    |       |
+    Then I'm viewing the details page for restaurant by "user"
+    | waiterid            | lastname          | firstname   | Username                  | phone_number_wait   | password  | order |
+    |                     |                   |             |                           |                     |           |       |
+
+    And There are 0 waiter
+
+  Scenario: Register all the information of the waiter with login
+    Given I login as user "user" with password "password"
+    When I register client suddenly click home
+    | waiterid            | lastname          | firstname   | Username                  | phone_number_wait   | password  | order |
+    | 4                   | singh             | bikraj      | bs6                       | 632215778           | bikrdj    |       |
+    Then I'm viewing the details page for table by "user"
+    | waiterid            | lastname          | firstname   | Username                  | phone_number_wait   | password  | order |
+    |                     |                   |             |                           |                     |           |       |
+    And There are 0 waiter

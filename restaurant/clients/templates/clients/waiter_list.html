@@ -1,0 +1,64 @@
+<center><h1>Waiter</h1></center>
+
+<table border="1">
+<thead>
+  <style>
+
+  body {
+    background-color: #e4bc52;
+  }
+
+  table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  }
+
+  td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  }
+  table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  }
+  th, td {
+  padding: 15px;
+  }
+
+  </style>
+
+    <tr>
+    <th class="bg-info"><i>waiterid</i></th>
+    <th class="bg-info"><i>lastname</i></th>
+    <th class="bg-info"><i>firstname</i></th>
+    <th class="bg-info"><i>Username</i></th>
+    <th class="bg-info"><i>phone_number_wait</i></th>
+    <th class="bg-info"><i>password</i></th>
+    <th class="bg-info"><i>order</i></th>
+    <th class="bg-danger"><i>View</i></th>
+    <th class="bg-danger"><i>Edit</i></th>
+    <th class="bg-danger"><i>Delete</i></th>
+    </tr>
+</thead>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<tbody>
+    {% for waiter in object_list %}
+    <tr>
+    <td class="bg-success"><b>{{ waiter.waiterid }}</b></td>
+    <td class="table-success"><b>{{ waiter.lastname }}</b></td>
+    <td class="bg-success"><b>{{ waiter.firstname }}</b></td>
+    <td class="table-success"><b>{{ waiter.Username }}</b></td>
+    <td class="bg-success"><b>{{ waiter.phone_number_wait }}</b></td>
+    <td class="table-success"><b>{{ waiter.password }}</b></td>
+    <td class="table-success"><b>{{ waiter.order }}</b></td>
+    <td class="table-warning"><b><i><a href="{% url "waiter_view" waiter.id %}">view</a></i></b></td>
+    <td class="table-success"><b><i><a href="{% url "waiter_edit" waiter.id %}">edit</a></i></b></td>
+    <td class="table-warning"><b><i><a href="{% url "waiter_delete" waiter.id %}">delete</a></i></b></td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+<a href="{% url "waiter_new" %}"><h3>New Waiter</h3></a>

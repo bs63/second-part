@@ -1,0 +1,42 @@
+Feature: Edit
+  In order to keep updated my previous registers about dishess
+  As a user
+  I want to edit a dishes details register I created
+
+  Background: There are registered users and a worker access by one of them
+    Given Exists a user "user1" with password "password"
+    And Exists a user "user2" with password "password"
+    And Exists dishes registered by "user1"
+      | mealid      | name       | date_of_meal      |
+      | 9           | one        | 9/10/2019         |
+
+  Scenario: Edit owned client registry address
+    Given I login as user "user1" with password "password"
+    When I edit the dishes with mealid 9
+      | name       |
+      | three            |
+    Then I'm viewing the details page for restaurant by "user1"
+    | mealid      | name      | date_of_meal     |
+    | 9           | three     | 9/10/2019        |
+    And There are 1 dishess
+
+  Scenario: Try to edit dishes but not logged in
+    Given I'm not logged in
+    When I view the details for dishes 9
+    Then There is no "edit" link available
+
+  Scenario: Try to edit dishes but not the owner no edit button
+    Given I login as user "user2" with password "password"
+    When I view the details for dishes 9
+    Then There is no "edit" link available
+
+  Scenario: Force edit dishes but not the owner permission exception
+    Given I login as user "user2" with password "password"
+    When I edit the dishes with mealid 9
+      | name        |
+      | three           |
+    Then Server responds with page containing "403 Forbidden"
+    When I view the details for table 9
+    Then I'm viewing the details page for restaurant by "user1"
+    | mealid      | name       | date_of_meal      |
+    | 9           | one        | 9/10/2019         |

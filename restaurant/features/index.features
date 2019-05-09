@@ -1,0 +1,16 @@
+Feature: See the homepage
+  In order to see the data available
+  I want to see all the information needed
+  Background:
+  Given Exists a user "user" with password "password"
+
+  Scenario: Try to see the homepage without login empty
+  Given I'm not logged in
+  When I go to the Homepage
+  Then Server responds with page containing "Sorry"
+
+
+  Scenario: Try to see the homepage with login
+  Given I login as user "user" with password "password"
+  When I go to index page
+  Then I'm viewing details of all the tables that I have

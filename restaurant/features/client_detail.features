@@ -1,0 +1,38 @@
+Feature: View Client
+  In order to know about a client
+  As a user
+  I want to view the registered client details
+
+  Background: There is one restaurant with 2 clients and another without
+    Given Exists a user "user1" with password "password"
+    And Exists a user "user2" with password "password"
+    And Exists client at restaurant by "user1"
+      | Nif        | Fname      | Lname   |  Address         |  Phone Number  |
+      | X9334549E  | Bikraj     | Singh   |  Manuel Galadies |  632215778     |
+    And Exists client at restaurant by "user2"
+      | Nif        | Fname      | Lname   |  Address         |  Phone Number  |
+      | X9334519E  | Ajay       | Singh   |  Manuel Galadies |  632215778     |
+
+  Scenario: View details about owned client
+    Given I login as user "user1" with password "password"
+    When I view the details for client "Bikraj"
+    Then I'm viewing client details including
+      | Nif        | Fname      | Lname   |  Address         |  Phone Number  |
+      | X9334549E  | Bikraj     | Singh   |  Manuel Galadies |  632215778     |
+    And There is "edit" link available
+
+  Scenario: View details about client but not logged in
+    Given I'm not logged in
+    When I view the details for client "Bikraj"
+    Then I'm viewing client details including
+      | Nif        | Fname      | Lname   |  Address         |  Phone Number  |
+      | X9334549E  | Bikraj     | Singh   |  Manuel Galadies |  632215778     |
+    And There is no "edit" link available
+
+  Scenario: View details about other user client
+    Given I login as user "user1" with password "password"
+    When I view the details for client "Ajay"
+    Then I'm viewing client details including
+      | Nif        | Fname      | Lname   |  Address         |  Phone Number  |
+      | X9334519E  | Ajay       | Singh   |  Manuel Galadies |  632215778     |
+    And There is no "edit" link available

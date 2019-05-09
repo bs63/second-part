@@ -1,0 +1,35 @@
+Feature: View Waiter
+  In order to know about a waiter
+  As a user
+  I want to view the registered waiter details
+
+  Background: There is one restaurant with 2 waiters "password"
+    And Exists a user "user2" with password "password"
+    And Exists waiter at restaurant by "user1"
+      | waiterid            | lastname          | firstname   | Username                  | phone_number_wait   | password  | order |
+      | 4                   | singh             | bikraj      | bs6                       | 632215778           | bikrdj    |       |
+    And Exists waiter at restaurant by "user2"
+      | waiterid            | lastname          | firstname   | Username                  | phone_number_wait   | password  | order |
+      | 5                   | singh             | bikraj      | bs6                       | 632215778           | bikrdj    |       |
+
+    Scenario: View details about owned waiter
+    Given I login as user "user1" with password "password"
+    When I view the details for waiter 4
+    Then I'm viewing waiter details including
+      | waiterid            | lastname          | firstname   | Username                  | phone_number_wait   | password  | order |
+      | 4                   | singh             | bikraj      | bs6                       | 632215778           | bikrdj    |       |
+    And There is "edit" link available
+
+  Scenario: View details about waiter but not logged in
+    Given I'm not logged in
+    When I view the details for waiter 4
+    Then I'm viewing waiter details including
+      | waiterid            | lastname          | firstname   | Username                  | phone_number_wait   | password  | order |
+      | 4                   | singh             | bikraj      | bs6                       | 632215778           | bikrdj    |       |
+  Scenario: View details about other user waiter
+    Given I login as user "user1" with password "password"
+    When I view the details for waiter 5
+    Then I'm viewing waiter details including
+      | waiterid            | lastname          | firstname   | Username                  | phone_number_wait   | password  | order |
+      | 5                   | singh             | bikraj      | bs6                       | 632215778           | bikrdj    |       |
+    And There is no "edit" link available

@@ -1,0 +1,38 @@
+Feature: Register Review
+  In order to keep track reviews that visit a restaurant as a Client
+  As a user
+  I want to register a review
+
+  Background: There is a registered user
+    Given Exists a user "user" with password "password"
+
+  Scenario: Register all the information of the table
+    Given I login as user "user" with password "password"
+    When I register review information
+    | rating       | comment      | date      |  client  |
+    | 4            | hey          | 25/12/2019|          |
+    Then I'm viewing the details page for client by "user"
+    | rating       | comment      | date      |  client  |
+    | 4            | hey          | 25/12/2019|          |
+    And There are 1 review
+
+  Scenario: Register all the information of the review but logout
+    Given I login as user "user" with password "password"
+    When I register review suddenly logout
+    | rating       | comment      | date      |  client  |
+    | 4            | hey          | 25/12/2019|          |
+    Then I'm viewing the details page for restaurant by "user"
+    | rating       | comment      | date      |  client  |
+    |              |              |           |          |
+
+    And There are 0 review
+
+  Scenario: Register all the information of the reviews with login
+    Given I login as user "user" with password "password"
+    When I register client suddenly click home
+    | rating       | comment      | date      |  client  |
+    | 4            | hey          | 25/12/2019|          |
+    Then I'm viewing the details page for table by "user"
+    | rating       | comment      | date      |  client  |
+    |              |              |           |          |
+    And There are 0 review

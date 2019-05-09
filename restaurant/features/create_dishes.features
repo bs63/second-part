@@ -1,0 +1,38 @@
+Feature: Register Table
+  In order to keep track of the Table that visit a restaurant as a Client
+  As a user
+  I want to register a table together with his details
+
+  Background: There is a registered user
+    Given Exists a user "user" with password "password"
+
+  Scenario: Register all the information of the dishes
+    Given I login as user "user" with password "password"
+    When I register dishes information
+    | meal_id     | name      | date_of_meal   | price          | description  | rating  |  images  | similardishes |
+    | 4           | palao     | 24/11/2019     |  14            |              |  3      |          | yes           |
+    Then I'm viewing the details page for client by "user"
+    | meal_id     | name      | date_of_meal   | price          | description  | rating  |  images  | similardishes |
+    | 4           | palao     | 24/11/2019     |  14            |              |  3      |          | yes           |
+    And There are 1 dishes
+
+  Scenario: Register all the information of the dishes but logout
+    Given I login as user "user" with password "password"
+    When I register dishes suddenly logout
+    | meal_id     | name      | date_of_meal   | price          | description  | rating  |  images  | similardishes |
+    | 4           | palao     | 24/11/2019     |  14            |              |  3      |          | yes           |
+    Then I'm viewing the details page for restaurant by "user"
+    | meal_id     | name      | date_of_meal   | price          | description  | rating  |  images  | similardishes |
+    |             |           |                |                |              |         |          |               |
+
+    And There are 0 dishes
+
+  Scenario: Register all the information of the dishes with login
+    Given I login as user "user" with password "password"
+    When I register dishes suddenly click home
+    | meal_id     | name      | date_of_meal   | price          | description  | rating  |  images  | similardishes |
+    | 4           | palao     | 24/11/2019     |  14            |              |  3      |          | yes           |
+    Then I'm viewing the details page for table by "user"
+    | meal_id     | name      | date_of_meal   | price          | description  | rating  |  images  | similardishes |
+    |             |           |                |                |              |         |          |               |
+    And There are 0 dishes

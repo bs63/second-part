@@ -1,0 +1,20 @@
+<thead>
+  <div class="navbar">
+    <a class="active" href="{% url "client_list" %}"><h2>Home</h2></a>
+    <a href="{% url "login" %}"><h2>Logout<h2></a>
+  </div>
+</thead>
+
+<style>
+
+  body {
+    background-color: #fab394;
+  }
+</style>
+
+<h1>clientDetails</h1>
+<h2>Nif: {{object.nif}}</h2>
+<h2>Fname: {{object.Fname}}</h2>
+<h2>Lname: {{object.Lname}}</h2>
+<h2>address: {{object.address}}</h2>
+<h2>phone_number: {{object.phone_number}}</h2>

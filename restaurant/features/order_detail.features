@@ -1,0 +1,35 @@
+Feature: View Order
+  In order to know about a order
+  As a user
+  I want to view the registered order details
+
+  Background: There is one restaurant with 2 orders "password"
+    And Exists a user "user2" with password "password"
+    And Exists order at restaurant by "user1"
+      | orderid       | order_date      | client   |   quantity         |   pick_up_date  |
+      | 4             | 7/10/2019       |          |   4                |   6/11/2019     |
+    And Exists order at restaurant by "user2"
+      | orderid       | order_date      | client   |   quantity         |   pick_up_date  |
+      | 5             | 7/10/2019       |          |   4                |   6/11/2019     |
+
+    Scenario: View details about owned order
+    Given I login as user "user1" with password "password"
+    When I view the details for order 4
+    Then I'm viewing order details including
+      | orderid       | order_date      | client   |   quantity         |   pick_up_date  |
+      | 4             | 7/10/2019       |          |   4                |   6/11/2019     |
+    And There is "edit" link available
+
+  Scenario: View details about order but not logged in
+    Given I'm not logged in
+    When I view the details for order 4
+    Then I'm viewing order details including
+      | orderid       | order_date      | client   |   quantity         |   pick_up_date  |
+      | 4             | 7/10/2019       |          |   4                |   6/11/2019     |
+  Scenario: View details about other user order
+    Given I login as user "user1" with password "password"
+    When I view the details for order 5
+    Then I'm viewing order details including
+      | orderid       | order_date      | client   |   quantity         |   pick_up_date  |
+      | 5             | 7/10/2019       |          |   4                |   6/11/2019     |
+  And There is no "edit" link available

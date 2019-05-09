@@ -1,0 +1,42 @@
+Feature: Edit Order
+  In order to keep updated my previous registers about orders
+  As a user
+  I want to edit a order details register I created
+
+  Background: There are registered users and a worker access by one of them
+    Given Exists a user "user1" with password "password"
+    And Exists a user "user2" with password "password"
+    And Exists order registered by "user1"
+      | orderid      | order_date            | quantity      |
+      | 9            | 20/11/2019            | 6             |
+
+  Scenario: Edit owned client registry address
+    Given I login as user "user1" with password "password"
+    When I edit the order with orderid 9
+      | quantity        |
+      | 10              |
+    Then I'm viewing the details page for restaurant by "user1"
+    | orderid      | order_date            | quantity      |
+    | 9            | 20/11/2019            | 10            |
+    And There are 1 orders
+
+  Scenario: Try to edit order but not logged in
+    Given I'm not logged in
+    When I view the details for order 9
+    Then There is no "edit" link available
+
+  Scenario: Try to edit order but not the owner no edit button
+    Given I login as user "user2" with password "password"
+    When I view the details for order 9
+    Then There is no "edit" link available
+
+  Scenario: Force edit order but not the owner permission exception
+    Given I login as user "user2" with password "password"
+    When I edit the order with orderid 9
+      | quantity         |
+      | 10               |
+    Then Server responds with page containing "403 Forbidden"
+    When I view the details for table 9
+    Then I'm viewing the details page for restaurant by "user1"
+    | orderid      | order_date            | quantity      |
+    | 9            | 20/11/2019            | 6             |

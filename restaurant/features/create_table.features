@@ -1,0 +1,38 @@
+Feature: Register Table
+  In order to keep track of the Table that visit a restaurant as a Client
+  As a user
+  I want to register a table together with his details
+
+  Background: There is a registered user
+    Given Exists a user "user" with password "password"
+
+  Scenario: Register all the information of the table
+    Given I login as user "user" with password "password"
+    When I register table information
+    | table_number        | capacity      | status   |  num_per_sitting         | serv_staff_id  | client  |
+    | 4                   | 7             | Ocupied  |  4                       | 6              |         |
+    Then I'm viewing the details page for client by "user"
+    | table_number        | capacity      | status   |  num_per_sitting         | serv_staff_id  | client            |
+    | 4                   | 7             | Ocupied  |  4                       | 6              | Client object (5) |
+    And There are 1 table
+
+  Scenario: Register all the information of the table but logout
+    Given I login as user "user" with password "password"
+    When I register table suddenly logout
+    | table_number        | capacity      | status   |  num_per_sitting         |  serv_staff_id  |  client            |
+    | 4                   | 7             | Ocupied  |  4                       |  6              |  Client object (5) |
+    Then I'm viewing the details page for restaurant by "user"
+    | table_number        | capacity      | status   |  num_per_sitting         |  serv_staff_id  |  client            |
+    |                     |               |          |                          |                 |                    |
+
+    And There are 0 table
+
+  Scenario: Register all the information of the table with login
+    Given I login as user "user" with password "password"
+    When I register client suddenly click home
+    | table_number        | capacity      | status   |  num_per_sitting         | serv_staff_id  |  client            |
+    | 4                   | 7             | Ocupied  |  4                       | 6              |  Client object (5) |
+    Then I'm viewing the details page for table by "user"
+    | table_number        | capacity      | status   | num_per_sitting         |  serv_staff_id  |  client            |
+    |                     |               |          |                         |                 |                    |
+    And There are 0 table

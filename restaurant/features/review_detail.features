@@ -1,0 +1,34 @@
+Feature: View Reviews
+  In order to know about a review
+  As a user
+  I want to view the registered review details
+
+  Background: There is one restaurant with 2 reviews "password"
+    And Exists a user "user2" with password "password"
+    And Exists review at restaurant by "user1"
+      | rating       | comment      | date      |  client  |
+      | 4            | hey          | 25/12/2019|          |
+    And Exists review at restaurant by "user2"
+      | rating       | comment      | date      |  client  |
+      | 5            | hey          | 25/12/2019|          |
+
+    Scenario: View details about owned review
+    Given I login as user "user1" with password "password"
+    When I view the details for review 4
+    Then I'm viewing review details including
+      | rating       | comment      | date      |  client  |
+      | 4            | hey          | 25/12/2019|          |
+    And There is "edit" link available
+
+  Scenario: View details about review but not logged in
+    Given I'm not logged in
+    When I view the details for review 4
+    Then I'm viewing review details including
+      | rating       | comment      | date      |  client  |
+      | 4            | hey          | 25/12/2019|          |
+  Scenario: View details about other user review
+    Given I login as user "user1" with password "password"
+    When I view the details for review 5
+    Then I'm viewing review details including
+      | rating       | comment      | date      |  client  |
+      | 5            | hey          | 25/12/2019|          |  And There is no "edit" link available

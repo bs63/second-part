@@ -1,0 +1,42 @@
+Feature: Edit
+  In order to keep updated my previous registers about reviews
+  As a user
+  I want to edit a review details register I created
+
+  Background: There are registered users and a worker access by one of them
+    Given Exists a user "user1" with password "password"
+    And Exists a user "user2" with password "password"
+    And Exists review registered by "user1"
+      | rating      | comment       | date      |
+      | 3           | one           | 9/10/2019 |
+
+  Scenario: Edit owned client registry address
+    Given I login as user "user1" with password "password"
+    When I edit the review with rating 3
+      | date       |
+      | 10/10/2019      |
+    Then I'm viewing the details page for restaurant by "user1"
+    | rating      | comment      | date     |
+    | 3           | three        | 10/10/2019        |
+    And There are 1 reviews
+
+  Scenario: Try to edit review but not logged in
+    Given I'm not logged in
+    When I view the details for review 3
+    Then There is no "edit" link available
+
+  Scenario: Try to edit review but not the owner no edit button
+    Given I login as user "user2" with password "password"
+    When I view the details for review 3
+    Then There is no "edit" link available
+
+  Scenario: Force edit review but not the owner permission exception
+    Given I login as user "user2" with password "password"
+    When I edit the review with rating 3
+      | date       |
+      | 10/10/2019         |
+    Then Server responds with page containing "403 Forbidden"
+    When I view the details for table 9
+    Then I'm viewing the details page for restaurant by "user1"
+    | rating      | comment       | date      |
+    | 3           | one           | 9/10/2019 |

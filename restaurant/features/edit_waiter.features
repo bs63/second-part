@@ -1,0 +1,42 @@
+Feature: Edit
+  In order to keep updated my previous registers about waiters
+  As a user
+  I want to edit a waiter details register I created
+
+  Background: There are registered users and a worker access by one of them
+    Given Exists a user "user1" with password "password"
+    And Exists a user "user2" with password "password"
+    And Exists waiter registered by "user1"
+      | waiterid      | firstname       | lastname      |
+      | 9             | one             | two           |
+
+  Scenario: Edit owned client registry address
+    Given I login as user "user1" with password "password"
+    When I edit the waiter with waiterid 9
+      | lastname       |
+      | three            |
+    Then I'm viewing the details page for restaurant by "user1"
+    | waiterid      | firstname       | lastname     |
+    | 9             | one             | three          |
+    And There are 1 waiters
+
+  Scenario: Try to edit waiter but not logged in
+    Given I'm not logged in
+    When I view the details for waiter 9
+    Then There is no "edit" link available
+
+  Scenario: Try to edit waiter but not the owner no edit button
+    Given I login as user "user2" with password "password"
+    When I view the details for waiter 9
+    Then There is no "edit" link available
+
+  Scenario: Force edit waiter but not the owner permission exception
+    Given I login as user "user2" with password "password"
+    When I edit the waiter with waiterid 9
+      | lastname        |
+      | three           |
+    Then Server responds with page containing "403 Forbidden"
+    When I view the details for table 9
+    Then I'm viewing the details page for restaurant by "user1"
+    | waiterid      | firstname       | lastname      |
+    | 9             | one             | two           |
