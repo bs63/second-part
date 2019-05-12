@@ -13,6 +13,7 @@ urlpatterns = [
     path('delete/<int:pk>', views.client_delete, name='client_delete'),
 
     path('ss', views.home, name = "index"),
+    path('we', views.index2, name = "index2"),
     path('tab', views.table_list, name='table_list'),
     path('view/table/<int:pk>', views.table_view, name='table_view'),
     path('table', views.TableCreate, name= 'table_new'),
@@ -21,6 +22,7 @@ urlpatterns = [
     path('delete/table/<int:pk>', views.table_delete, name='table_delete'),
 
     path('ss', views.home, name = "index"),
+    path('we', views.index2, name = "index2"),
     path('ord', views.order_list, name='order_list'),
     path('view/order/<int:pk>', views.order_view, name='order_view'),
     path('order', views.OrderCreate, name= 'order_new'),
@@ -29,6 +31,7 @@ urlpatterns = [
     path('delete/order/<int:pk>', views.order_delete, name='order_delete'),
 
     path('ss', views.home, name = "index"),
+    path('we', views.index2, name = "index2"),
     path('wait', views.waiter_list, name='waiter_list'),
     path('view/waiter/<int:pk>', views.waiter_view, name='waiter_view'),
     path('waiter', views.WaiterCreate, name= 'waiter_new'),
@@ -37,6 +40,7 @@ urlpatterns = [
     path('delete/waiter/<int:pk>', views.waiter_delete, name='waiter_delete'),
 
     path('ss', views.home, name = "index"),
+    path('we', views.index2, name = "index2"),
     path('dish', views.dishes_list, name='dishes_list'),
     path('view/dishes/<int:pk>', views.dishes_view, name='dishes_view'),
     path('dishes', views.DishesCreate, name= 'dishes_new'),
@@ -45,6 +49,7 @@ urlpatterns = [
     path('delete/dishes/<int:pk>', views.dishes_delete, name='dishes_delete'),
 
     path('ss', views.home, name = "index"),
+    path('we', views.index2, name = "index2"),
     path('men', views.menu_list, name='menu_list'),
     path('view/menu/<int:pk>', views.menu_view, name='menu_view'),
     path('menu', views.MenuCreate, name= 'menu_new'),
@@ -53,6 +58,7 @@ urlpatterns = [
     path('delete/menu/<int:pk>', views.menu_delete, name='menu_delete'),
 
     path('ss', views.home, name = "index"),
+    path('we', views.index2, name = "index2"),
     path('rev', views.review_list, name='review_list'),
     path('view/review/<int:pk>', views.review_view, name='review_view'),
     path('review', views.ReviewCreate, name= 'review_new'),
