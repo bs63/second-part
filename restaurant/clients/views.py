@@ -55,6 +55,7 @@ def backbutton(request):
     return redirect('index')
 
 
+
 def table_list(request, template_name='clients/table_list.html'):
     table = Table.objects.all()
     data = {}
