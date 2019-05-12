@@ -1,3 +1,28 @@
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="454446668642-m9353ror6rl1hdl97h5mcjf3ke8ic1pn.apps.googleusercontent.com">
+
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
+<script>
+  function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    document.getElementById('profileinfo').innerHTML = profile.getName() + "<br>"
+      + "<a href='mailto:'" + profile.getEmail() + "'>" + profile.getEmail() + "</a>" + "<br>"
+      + "<img src='" + profile.getImageUrl() + "'/>";
+  }
+</script>
+
+
+<a href="#" onclick="signOut();">Sign out from Google</a>
+<script>
+  function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
+</script>
+
+
 <center><h1>Clients</h1></center>
 
 <table border="1">
