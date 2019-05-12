@@ -80,3 +80,11 @@ class Review(models.Model):
     comment = models.TextField(blank=True, null=True)
     date = models.DateField()
     client = models.ForeignKey(Client, default=1, related_name='reviews', on_delete=models.CASCADE)
+
+class City(models.Model):
+    name = models.CharField(max_length = 25)
+
+    def __str__(self):
+        return self.name
+    class meta:
+        verbose_name_plural = 'cities'

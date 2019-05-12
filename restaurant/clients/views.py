@@ -2,16 +2,42 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import CreateView, UpdateView
-
+import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .forms import ClientForm, TableForm, OrderForm, WaiterForm, DishesForm, MenuForm, ReviewForm
-from .models import Client, Table, Order, Waiter, Dishes, Menu, Review
+from .forms import ClientForm, TableForm, OrderForm, WaiterForm, DishesForm, MenuForm, ReviewForm, CityForm
+from .models import Client, Table, Order, Waiter, Dishes, Menu, Review, City
 from django.views.generic.detail import DetailView
 
 
 def home(request):
     return render(request, 'clients/index.html')
+
+def index2(request):
+    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=a7a7c1641ab8a08f04bdcb8faf13f8eb'
+
+
+    if request.method == 'POST':
+        form = CityForm(request.POST)
+        form.save()
+
+    form = CityForm()
+    cities = City.objects.all()
+    weather_data = []
+
+    for city in cities:
+        r = requests.get(url.format(city)).json()
+
+
+        city_weather = {
+            'city': city.name,
+            'temperature': r['main']['temp'],
+            'description' : r['weather'][0]['description'],
+            'icon' : r['weather'][0]['icon'],
+        }
+        weather_data.append(city_weather)
+    context = {'weather_data' : weather_data, 'form' : form}
+    return render(request, 'clients/weather.html', context)
 
 
 def client_list(request, template_name='clients/client_list.html'):

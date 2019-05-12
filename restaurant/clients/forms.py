@@ -1,5 +1,6 @@
 from django import forms
-from .models import Client, Table, Order, Waiter, Dishes, Menu, Review
+from .models import Client, Table, Order, Waiter, Dishes, Menu, Review, City
+from django.forms import TextInput
 
 
 
@@ -44,3 +45,10 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ('rating', 'comment', 'date', 'client', )
+
+class CityForm(forms.ModelForm):
+
+    class Meta:
+        model = City
+        fields = ['name']
+        widgets = {'name' : TextInput(attrs={'class' : 'input' , 'placeholder' : 'City Name'})}
