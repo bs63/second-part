@@ -1,4 +1,3 @@
-
 The main purpose of this assignment is to design the web page of WCAG 1.0. The WCAG documents explain how to make web content more accessible to people with disabilities.  The WCAG is the part of the web accessibility published by the Web Accessibility Initiative. The objective of that organization was that the page will be maxim accessible possible for all the people. In WCAG documents, we can find the different points that the page or the application have to accomplish. WCAG 1.0 has the 14 guidelines in which each of them describes a general principle of accessible design.
 
 The assignment is divided into two parts:
@@ -117,3 +116,8 @@ Separation of the database server: for the separation of the database server is 
 Separate media server: we have the big problem left over the single server setup because of the serving of media from the same box that handles the dynamic content. The two activities are working under different circumstances but smashing each other in the same box.
 
 The media server should be a stripped-down web server optimized for static media delivery. In this case, the preferable option for this server is Nginx but, we can also use apache for the heavily stripped. It is important to use a separate media server for heavy sites in static content. If our Django application has the uploads files so, Django needs to be able to write uploaded media to the media server. Moreover, if the media needs another server, so we have to arrange some way that writes to happen across the network.
+
+
+### Second Deliverable
+
+Use localhost:8000 as a URL instead of 127.0.0.1:8000 in order to use Google OAuth
