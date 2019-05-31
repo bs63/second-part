@@ -11,7 +11,6 @@
   }
 </script>
 
-
 <a href="#" onclick="signOut();">Sign out from Google</a>
 <script>
   function signOut() {
@@ -21,6 +20,22 @@
     });
   }
 </script>
+
+
+<div vocab="http://schema.org/"typeof="Restaurant">
+<h1><span property="name">Restaurant Web Project</span></h1>
+<p property="description">Restaurant familiar, ambient acollidor i decoració tradicional</p>
+<img src="https://www.creativefabrica.com/wp-content/uploads/2018/09/Crossed-spoon-and-fork-logo-by-yahyaanasatokillah-580x387.jpg" alt="restaurant logo" width=200 property="image" />
+<p property="address">
+    Carrer Major, 23 <br/>
+    25004 <br/>
+    Lleida <br/>
+</p>
+<p property="priceRange">$$</p>
+<p property="servesCuisine">Restaurant de cuina casolana</p>
+<p property="telephone">973 12 12 12</p>
+
+</div>
 
 
 <center><h1>Clients</h1></center>
@@ -70,7 +85,7 @@
     <th class="bg-danger"><i>Delete</i></th>
     </tr>
 </thead>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <tbody>
     {% for client in object_list %}
