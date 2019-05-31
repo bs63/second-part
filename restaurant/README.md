@@ -121,3 +121,9 @@ The media server should be a stripped-down web server optimized for static media
 ### Second Deliverable
 
 Use localhost:8000 as a URL instead of 127.0.0.1:8000 in order to use Google OAuth
+
+
+### Third Deliverable
+
+Added semantic markup based on RDFa to the main HTML file, which is recognized properly by the Google Structured Data Evaluation Tool
+
